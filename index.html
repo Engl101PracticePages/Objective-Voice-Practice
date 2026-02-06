@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Objective Voice</title>
+  <style>
+    :root{
+      --bg1:#ffffff;
+      --bg2:#fafafa;
+      --text:#111827;
+      --muted:#6b7280;
+      --border:#e5e7eb;
+      --chip:#f3f4f6;
+      --btn:#111827;
+      --btnText:#ffffff;
+      --btnOutlineText:#111827;
+      --good:#16a34a;
+      --bad:#dc2626;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background: linear-gradient(to bottom, var(--bg1), var(--bg2));
+    }
+    .wrap{max-width: 900px; margin: 0 auto; padding: 24px;}
+    h1{margin:0 0 8px; font-size: 32px; letter-spacing: -0.02em;}
+    p{margin:0}
+    .sub{color:var(--muted); margin-bottom: 14px; line-height:1.4}
+
+    .tabs{display:flex; gap:10px; flex-wrap:wrap; margin: 10px 0 18px;}
+    .tabbtn{
+      border:1px solid var(--border);
+      background:#fff;
+      padding:10px 14px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-weight:600;
+    }
+    .tabbtn.active{
+      background: var(--btn);
+      color: var(--btnText);
+      border-color: var(--btn);
+    }
+
+    .card{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.03);
+      padding: 18px;
+      margin: 14px 0;
+    }
+    .sectionTitle{
+      display:flex; align-items:center; gap:10px;
+      margin:0 0 12px;
+      font-size:18px;
+      font-weight:800;
+    }
+    .chips{display:flex; flex-wrap:wrap; gap:8px;}
+    .chip{
+      border:1px solid var(--border);
+      background: var(--chip);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+    }
+
+    .exampleBox{
+      border:1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      margin: 10px 0;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      border:1px solid var(--border);
+      background:#fff;
+      margin-right:8px;
+    }
+    .badge.secondary{background: var(--chip);}
+
+    details{
+      border:1px solid var(--border);
+      border-radius: 16px;
+      padding: 10px 12px;
+      margin: 10px 0;
+      background:#fff;
+    }
+    summary{
+      cursor:pointer;
+      font-weight:800;
+      list-style:none;
+    }
+    summary::-webkit-details-marker{display:none;}
+    .detailsBody{margin-top: 10px; color: var(--text); line-height:1.4}
+    .muted{color:var(--muted)}
+    ul{margin: 8px 0 0 18px}
+    li{margin: 6px 0}
+
+    textarea, input{
+      width:100%;
+      border:1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 12px;
+      font-size: 14px;
+      outline:none;
+    }
+    textarea{min-height: 90px; resize: vertical;}
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .btn{
+      border:1px solid var(--btn);
+      background: var(--btn);
+      color: var(--btnText);
+      padding: 10px 14px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-weight:800;
+    }
+    .btn.outline{
+      background:#fff;
+      color:var(--btnOutlineText);
+      border:1px solid var(--border);
+    }
+
+    .meterWrap{
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius: 16px;
+      padding: 14px;
+      margin-top: 10px;
+    }
+    .meterTop{display:flex; justify-content:space-between; align-items:center; gap:10px;}
+    .bar{
+      height: 10px;
+      background: var(--chip);
+      border-radius: 999px;
+      overflow:hidden;
+      margin-top: 10px;
+    }
+    .bar > div{height:100%; background: var(--btn); width:50%;}
+    .hints{margin-top: 12px; display:grid; gap:10px;}
+    .hints h4{margin:0 0 6px; font-size: 13px;}
+    .hints ul{margin:0 0 0 18px; color:var(--muted);}
+
+    .panel{display:none;}
+    .panel.active{display:block;}
+
+    .promptBtns{display:flex; gap:10px; flex-wrap:wrap;}
+    .promptBtns button{font-weight:800}
+    .footer{margin-top: 16px; font-size: 12px; color: var(--muted);}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Objective Voice</h1>
+      <p class="sub">A quick, student-friendly page for learning and practicing objective voice (less “I think,” more facts + evidence).</p>
+
+      <div class="tabs">
+        <button class="tabbtn active" data-tab="learn">Learn</button>
+        <button class="tabbtn" data-tab="practice">Practice</button>
+      </div>
+    </header>
+
+    <!-- LEARN -->
+    <section id="learn" class="panel active">
+      <div class="card">
+        <div class="sectionTitle">✨ What is objective voice?</div>
+        <div class="chips">
+          <span class="chip">Avoids personal opinions (e.g., “I think,” “I believe”)</span>
+          <span class="chip">Focuses on facts, evidence, and research</span>
+          <span class="chip">Uses formal language</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="sectionTitle">✨ Objective vs. subjective examples</div>
+
+        <div class="exampleBox">
+          <div style="margin-bottom:8px;">
+            <span class="badge secondary">Subjective</span>
+            <span>I think getting a DVM is the best choice for a veterinary career.</span>
+          </div>
+          <div>
+            <span class="badge">Objective</span>
+            <span>Studies indicate that obtaining a DVM leads to increased career opportunities in veterinary medicine.</span>
+          </div>
+        </div>
+
+        <div class="exampleBox">
+          <div style="margin-bottom:8px;">
+            <span class="badge secondary">Subjective</span>
+            <span>I will compare different veterinary programs to decide which one is best for me.</span>
+          </div>
+          <div>
+            <span class="badge">Objective</span>
+            <span>This essay will compare different veterinary programs to analyze their advantages and requirements.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="sectionTitle">✨ Strategies for writing objectively</div>
+
+        <details>
+          <summary>Use third-person instead of first-person pronouns</summary>
+          <div class="detailsBody">
+            <div class="exampleBox" style="background:#fafafa;">
+              <div class="muted" style="font-weight:800; font-size:12px;">First-person</div>
+              <div>“I believe that becoming a veterinarian is a great career choice because I love animals.”</div>
+            </div>
+            <div class="exampleBox">
+              <div class="muted" style="font-weight:800; font-size:12px;">Objective version</div>
+              <div>“Veterinary medicine provides a rewarding career for those interested in animal healthcare, as it combines medical expertise with compassionate treatment.”</div>
+            </div>
+            <div class="muted">Tip: Instead of “I will discuss,” try “This essay will examine.”</div>
+          </div>
+        </details>
+
+        <details>
+          <summary>Replace opinions with researched, evidence-based statements</summary>
+          <div class="detailsBody">
+            <div class="exampleBox" style="background:#fafafa;">
+              <div class="muted" style="font-weight:800; font-size:12px;">Opinion-based</div>
+              <div>“I think veterinarians are in high demand because more people have pets now.”</div>
+            </div>
+            <div class="exampleBox">
+              <div class="muted" style="font-weight:800; font-size:12px;">Evidence-based</div>
+              <div>“According to the Bureau of Labor Statistics, the demand for veterinarians is expected to grow by 19% by 2031, due to increased pet ownership and advancements in animal healthcare.”</div>
+            </div>
+            <div class="muted">Why it matters: objective writing relies on data instead of personal opinions.</div>
+          </div>
+        </details>
+
+        <details>
+          <summary>Use neutral, academic language</summary>
+          <div class="detailsBody">
+            <div class="exampleBox" style="background:#fafafa;">
+              <div class="muted" style="font-weight:800; font-size:12px;">Casual</div>
+              <div>“Veterinary school is super hard, but it’s totally worth it because it’s the best way to work with animals.”</div>
+            </div>
+            <div class="exampleBox">
+              <div class="muted" style="font-weight:800; font-size:12px;">Academic</div>
+              <div>“Veterinary school requires rigorous training, but it provides essential skills needed for a successful career in animal healthcare.”</div>
+            </div>
+            <ul class="muted">
+              <li>Avoid casual phrases like “super hard” or “totally worth it.”</li>
+              <li>Replace “best” with specific reasoning (what evidence supports it?).</li>
+              <li>Formal writing uses precise, professional vocabulary.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <div class="card">
+        <div class="sectionTitle">✨ Quick self-check</div>
+        <p class="muted">Whenever you write a sentence, ask:</p>
+        <ul>
+          <li>Does the sentence rely on facts (not personal opinion)?</li>
+          <li>Could someone else fact-check it?</li>
+          <li>Does it use research-based language instead of personal belief?</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="sectionTitle">✨ Try it: quick “objective voice” coach</div>
+        <p class="muted">Paste one sentence below. This doesn’t grade you—it just gives simple hints.</p>
+        <textarea id="coachInput">I think veterinary school is super hard, but it’s totally worth it because it’s the best way to work with animals.</textarea>
+
+        <div class="meterWrap" id="coachPanel">
+          <div class="meterTop">
+            <div style="font-weight:800; font-size:13px;">Objective meter</div>
+            <div class="muted"><span id="coachScore">50</span>/100</div>
+          </div>
+          <div class="bar"><div id="coachBar" style="width:50%"></div></div>
+
+          <div class="hints">
+            <div id="reviseBox" style="display:none;">
+              <h4>Things to revise</h4>
+              <ul id="reviseList"></ul>
+            </div>
+            <div id="goodBox" style="display:none;">
+              <h4>Good moves</h4>
+              <ul id="goodList"></ul>
+            </div>
+            <div id="neutralBox" class="muted" style="display:none;">
+              Keep going—try adding research-based language like “According to…”
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRACTICE -->
+    <section id="practice" class="panel">
+      <div class="card">
+        <div class="sectionTitle">✨ Practice removing subjectivity</div>
+        <p class="muted">Pick a prompt, rewrite it objectively, then check your work.</p>
+
+        <div class="promptBtns">
+          <button class="tabbtn active" data-prompt="p1">Prompt P1</button>
+          <button class="tabbtn" data-prompt="p2">Prompt P2</button>
+          <button class="tabbtn" data-prompt="p3">Prompt P3</button>
+        </div>
+
+        <div class="exampleBox" id="promptBox" style="margin-top:12px;">
+          <div style="font-weight:800; font-size:13px;">Original (subjective)</div>
+          <div id="promptText" style="margin-top:6px;">I believe that becoming a veterinarian is a great career choice because I love animals.</div>
+          <div class="muted" style="margin-top:8px;">Starter idea: <span style="font-weight:800;" id="starterText">Veterinary medicine provides…</span></div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <div style="font-weight:800; font-size:13px; margin-bottom:8px;">Your rewrite (objective)</div>
+          <textarea id="rewriteInput" placeholder="Rewrite the sentence in objective voice…"></textarea>
+        </div>
+
+        <div class="row" style="margin-top:12px;">
+          <button class="btn" id="checkRewrite">Check my sentence</button>
+          <button class="btn outline" id="resetRewrite">Reset</button>
+        </div>
+
+        <div class="meterWrap" id="rewriteCoach" style="display:none;">
+          <div class="meterTop">
+            <div style="font-weight:800; font-size:13px;">Coach</div>
+            <div class="muted"><span id="rewriteScore">50</span>/100</div>
+          </div>
+          <div class="bar"><div id="rewriteBar" style="width:50%"></div></div>
+
+          <div class="hints" style="margin-top:12px;">
+            <div id="rewriteReviseBox" style="display:none;">
+              <h4>Try revising:</h4>
+              <ul id="rewriteReviseList"></ul>
+            </div>
+            <div id="rewriteNice" class="muted" style="display:none;">
+              Nice—this is pretty objective.
+            </div>
+
+            <div>
+              <h4>Self-check questions</h4>
+              <ul class="muted">
+                <li>Does the sentence rely on facts (not personal opinion)?</li>
+                <li>Could someone else fact-check it?</li>
+                <li>Does it use research-based language instead of personal belief?</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="sectionTitle">✨ Mini challenge</div>
+        <p class="muted">Write one sentence that starts with <b>“This essay will…”</b> and stays objective.</p>
+        <input placeholder="This essay will…" />
+        <p class="muted" style="margin-top:10px;">Tip: Avoid “best,” “I think,” and casual words. Try “by examining…” or “according to…”</p>
+      </div>
+    </section>
+
+    <div class="footer">Built for class practice: objective voice, neutral language, and evidence-based statements.</div>
+  </div>
+
+  <script>
+    // Tabs (Learn/Practice)
+    const tabButtons = document.querySelectorAll('.tabbtn[data-tab]');
+    const panels = { learn: document.getElementById('learn'), practice: document.getElementById('practice') };
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const tab = btn.getAttribute('data-tab');
+        Object.keys(panels).forEach(k => panels[k].classList.remove('active'));
+        panels[tab].classList.add('active');
+      });
+    });
+
+    // Simple hinting function
+    function scoreHint(text){
+      const t = (text || "").toLowerCase();
+      const flags = [
+        { key: "i think", label: 'Try removing “I think”', bad: true },
+        { key: "i believe", label: 'Try removing “I believe”', bad: true },
+        { key: "for me", label: 'Avoid “for me” in objective voice', bad: true },
+        { key: "best", label: '“Best” needs evidence or a more specific claim', bad: true },
+        { key: "super", label: 'Avoid casual words like “super”', bad: true },
+        { key: "totally", label: 'Avoid casual words like “totally”', bad: true },
+        { key: "this essay will", label: 'Good: “This essay will…” is objective framing', good: true },
+        { key: "according to", label: 'Good: signals research-based language', good: true },
+        { key: "studies", label: 'Good: signals evidence', good: true },
+      ];
+      const hits = flags.filter(f => t.includes(f.key));
+      const good = hits.filter(h => h.good).map(h => h.label);
+      const bad = hits.filter(h => h.bad).map(h => h.label);
+
+      let meter = 50;
+      meter += good.length * 12;
+      meter -= bad.length * 14;
+      meter = Math.max(0, Math.min(100, meter));
+      return { meter, good, bad };
+    }
+
+    function renderCoach(inputEl, scoreEl, barEl, reviseBox, reviseList, goodBox, goodList, neutralBox){
+      const { meter, good, bad } = scoreHint(inputEl.value);
+      scoreEl.textContent = meter;
+      barEl.style.width = meter + "%";
+
+      // clear lists
+      reviseList.innerHTML = "";
+      goodList.innerHTML = "";
+
+      if (bad.length){
+        reviseBox.style.display = "block";
+        bad.forEach(item => {
+          const li = document.createElement("li");
+          li.textContent = item;
+          reviseList.appendChild(li);
+        });
+      } else {
+        reviseBox.style.display = "none";
+      }
+
+      if (good.length){
+        goodBox.style.display = "block";
+        good.forEach(item => {
+          const li = document.createElement("li");
+          li.textContent = item;
+          goodList.appendChild(li);
+        });
+      } else {
+        goodBox.style.display = "none";
+      }
+
+      neutralBox.style.display = (!good.length && !bad.length) ? "block" : "none";
+    }
+
+    // Coach (learn tab)
+    const coachInput = document.getElementById("coachInput");
+    const coachScore = document.getElementById("coachScore");
+    const coachBar = document.getElementById("coachBar");
+    const reviseBox = document.getElementById("reviseBox");
+    const reviseList = document.getElementById("reviseList");
+    const goodBox = document.getElementById("goodBox");
+    const goodList = document.getElementById("goodList");
+    const neutralBox = document.getElementById("neutralBox");
+
+    function updateMainCoach(){
+      renderCoach(coachInput, coachScore, coachBar, reviseBox, reviseList, goodBox, goodList, neutralBox);
+    }
+    coachInput.addEventListener("input", updateMainCoach);
+    updateMainCoach();
+
+    // Practice prompts
+    const prompts = {
+      p1: {
+        text: "I believe that becoming a veterinarian is a great career choice because I love animals.",
+        starter: "Veterinary medicine provides…"
+      },
+      p2: {
+        text: "I think veterinarians are in high demand because more people have pets now.",
+        starter: "According to…"
+      },
+      p3: {
+        text: "Veterinary school is super hard, but it’s totally worth it because it’s the best way to work with animals.",
+        starter: "Veterinary school requires…"
+      }
+    };
+
+    const promptButtons = document.querySelectorAll('.tabbtn[data-prompt]');
+    const promptText = document.getElementById("promptText");
+    const starterText = document.getElementById("starterText");
+    const rewriteInput = document.getElementById("rewriteInput");
+
+    promptButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        promptButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const id = btn.getAttribute("data-prompt");
+        promptText.textContent = prompts[id].text;
+        starterText.textContent = prompts[id].starter;
+        rewriteInput.value = "";
+        document.getElementById("rewriteCoach").style.display = "none";
+      });
+    });
+
+    // Rewrite coach
+    const rewriteCoach = document.getElementById("rewriteCoach");
+    const rewriteScore = document.getElementById("rewriteScore");
+    const rewriteBar = document.getElementById("rewriteBar");
+    const rewriteReviseBox = document.getElementById("rewriteReviseBox");
+    const rewriteReviseList = document.getElementById("rewriteReviseList");
+    const rewriteNice = document.getElementById("rewriteNice");
+
+    function renderRewriteCoach(){
+      const { meter, bad } = scoreHint(rewriteInput.value);
+      rewriteScore.textContent = meter;
+      rewriteBar.style.width = meter + "%";
+      rewriteReviseList.innerHTML = "";
+
+      if (bad.length){
+        rewriteReviseBox.style.display = "block";
+        rewriteNice.style.display = "none";
+        bad.forEach(item => {
+          const li = document.createElement("li");
+          li.textContent = item;
+          rewriteReviseList.appendChild(li);
+        });
+      } else {
+        rewriteReviseBox.style.display = "none";
+        rewriteNice.style.display = "block";
+      }
+    }
+
+    document.getElementById("checkRewrite").addEventListener("click", () => {
+      rewriteCoach.style.display = "block";
+      renderRewriteCoach();
+    });
+
+    document.getElementById("resetRewrite").addEventListener("click", () => {
+      rewriteInput.value = "";
+      rewriteCoach.style.display = "none";
+    });
+  </script>
+</body>
+</html>
